@@ -1,7 +1,6 @@
 class Recommendation:
     class ThirdParty:
         URL = "https://maps.googleapis.com/maps/api/place/textsearch/json"
-        KEY = "AIzaSyDo2ahs4vhUl38NFl5XqQUxtmXGjIt-ITk"
     
         DATA = [
         {
