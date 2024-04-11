@@ -1,15 +1,16 @@
 import json
 import random
 import requests
-from apps.constant.recommendation_constant import Recommendation
 
 import requests
+
+from keys.third_part_api_keys import Constants
 
 
 class GooglePlaces:
     def __init__(self, description, user_location):
-        self.url = Recommendation.ThirdParty.URL
-        self.key = Recommendation.ThirdParty.KEY
+        self.url = Constants.ThirdParty.GooglePlaces.URL
+        self.key = Constants.ThirdParty.GooglePlaces.KEY
         self.params = {
             "query": description,
             "key": self.key,

@@ -5,7 +5,6 @@ const themeButton = document.querySelector("#theme-btn");
 const deleteButton = document.querySelector("#delete-btn");
 
 let userText = null;
-const API_KEY = "sk-CKG7YeTy7vJYVoTUDoYpT3BlbkFJY6fZrkhVyQ1JBmeDPYhAIzaSyBhokXXxNlbVyEEjGz4YIxsE-n4wVNcxSg";
 
 const loadDataFromLocalstorage = () => {
      const themeColor = localStorage.getItem("themeColor");
@@ -26,7 +25,7 @@ const createChatElement = (content, className) => {
     const chatDiv = document.createElement("div");
     chatDiv.classList.add("chat", className);
     chatDiv.innerHTML = content;
-    return chatDiv; 
+    return chatDiv;
 }
 
 const getChatResponse = async (incomingChatDiv) => {
@@ -52,7 +51,7 @@ const getChatResponse = async (incomingChatDiv) => {
     try {
         const response = await (await fetch(API_URL, requestOptions)).json();
         pElement.textContent = response.choices[0].text.trim();
-    } catch (error) { 
+    } catch (error) {
         pElement.classList.add("error");
         pElement.textContent = "Oops! Something went wrong while retrieving the response. Please try again.";
     }
@@ -89,8 +88,8 @@ const showTypingAnimation = () => {
 }
 
 const handleOutgoingChat = () => {
-    userText = chatInput.value.trim(); 
-    if(!userText) return; 
+    userText = chatInput.value.trim();
+    if(!userText) return;
 
     chatInput.value = "";
     chatInput.style.height = `${initialInputHeight}px`;
