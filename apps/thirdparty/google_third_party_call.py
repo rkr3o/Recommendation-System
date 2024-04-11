@@ -2,18 +2,20 @@ import json
 import random
 import requests
 from apps.constant.recommendation_constant import Recommendation
-
-import requests
+from keys.third_party_api_keys import Constants
 
 
 class GooglePlaces:
     def __init__(self, description, user_location):
-        self.url = Recommendation.ThirdParty.URL
-        self.key = Recommendation.ThirdParty.KEY
+        import pdb
+
+        pdb.set_trace()
+        self.url = Constants.ThirdParty.GooglePlaces.URL
+        self.key = Constants.ThirdParty.GooglePlaces.KEY
         self.params = {
             "query": description,
             "key": self.key,
-            "location": f"{user_location['lat']},{user_location['lng']}",
+            "location": f"{user_location.get('lat', '')},{user_location.get('lng', '')}",
         }
         self.response_data = None
         self.response_json = []
@@ -27,6 +29,9 @@ class GooglePlaces:
         self.process_response()
 
     def third_party_call(self):
+        import pdb
+
+        pdb.set_trace()
         self.response = requests.get(self.url, params=self.params)
         if self.response.status_code == 200:
             self.status_code = self.response.status_code

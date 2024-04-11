@@ -8,7 +8,7 @@ from apps.controller.recommend_activities_controller import RecommendationContro
 class RecommendActivities(APIView):
     def post(self, request):
         description = request.data.get("description", "")
-        location = request.data.get("userLocation", "")
+        location = request.data.get("userLocation", {})
         controller_instance = RecommendationController(
             description, location, is_place=True
         )
