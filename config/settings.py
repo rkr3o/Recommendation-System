@@ -34,16 +34,16 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:61269",
+    "http://127.0.0.1:57747",
 ]
 
 CORS_ALLOWED_METHODS = [
+    "POST",
+    "PUT",
     "DELETE",
     "GET",
     "OPTIONS",
     "PATCH",
-    "POST",
-    "PUT",
 ]
 # Application definition
 
