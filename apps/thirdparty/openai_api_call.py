@@ -1,7 +1,8 @@
 import os
 from openai import OpenAI
 import gradio as gr
-from keys.third_party_api_keys import Constants
+
+from keys.third_part_api_keys import Constants
 
 
 class OpenAi:
