@@ -23,18 +23,16 @@ const loadDataFromLocalstorage = () => {
 }
 
 const createChatElement = (content, className) => {
-    // Create new div and apply chat, specified class and set html content of div
     const chatDiv = document.createElement("div");
     chatDiv.classList.add("chat", className);
     chatDiv.innerHTML = content;
-    return chatDiv; // Return the created chat div
+    return chatDiv; 
 }
 
 const getChatResponse = async (incomingChatDiv) => {
     const API_URL = "https://api.openai.com/v1/completions";
     const pElement = document.createElement("p");
 
-    // Define the properties and data for the API request
     const requestOptions = {
         method: "POST",
         headers: {
@@ -51,16 +49,14 @@ const getChatResponse = async (incomingChatDiv) => {
         })
     }
 
-    // Send POST request to API, get response and set the reponse as paragraph element text
     try {
         const response = await (await fetch(API_URL, requestOptions)).json();
         pElement.textContent = response.choices[0].text.trim();
-    } catch (error) { // Add error class to the paragraph element and set error text
+    } catch (error) { 
         pElement.classList.add("error");
         pElement.textContent = "Oops! Something went wrong while retrieving the response. Please try again.";
     }
 
-    // Remove the typing animation, append the paragraph element and save the chats to local storage
     incomingChatDiv.querySelector(".typing-animation").remove();
     incomingChatDiv.querySelector(".chat-details").appendChild(pElement);
     localStorage.setItem("all-chats", chatContainer.innerHTML);
@@ -68,7 +64,6 @@ const getChatResponse = async (incomingChatDiv) => {
 }
 
 const copyResponse = (copyBtn) => {
-    // Copy the text content of the response to the clipboard
     const reponseTextElement = copyBtn.parentElement.querySelector("p");
     navigator.clipboard.writeText(reponseTextElement.textContent);
     copyBtn.textContent = "done";
@@ -76,7 +71,6 @@ const copyResponse = (copyBtn) => {
 }
 
 const showTypingAnimation = () => {
-    // Display the typing animation and call the getChatResponse function
     const html = `<div class="chat-content">
                     <div class="chat-details">
                         <img src="images/chatbot.jpeg" alt="chatbot-img">
@@ -88,7 +82,6 @@ const showTypingAnimation = () => {
                     </div>
                     <span onclick="copyResponse(this)" class="material-symbols-rounded">content_copy</span>
                 </div>`;
-    // Create an incoming chat div with typing animation and append it to chat container
     const incomingChatDiv = createChatElement(html, "incoming");
     chatContainer.appendChild(incomingChatDiv);
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
@@ -96,10 +89,9 @@ const showTypingAnimation = () => {
 }
 
 const handleOutgoingChat = () => {
-    userText = chatInput.value.trim(); // Get chatInput value and remove extra spaces
-    if(!userText) return; // If chatInput is empty return from here
+    userText = chatInput.value.trim(); 
+    if(!userText) return; 
 
-    // Clear the input field and reset its height
     chatInput.value = "";
     chatInput.style.height = `${initialInputHeight}px`;
 
@@ -110,7 +102,6 @@ const handleOutgoingChat = () => {
                     </div>
                 </div>`;
 
-    // Create an outgoing chat div with user's message and append it to chat container
     const outgoingChatDiv = createChatElement(html, "outgoing");
     chatContainer.querySelector(".default-text")?.remove();
     chatContainer.appendChild(outgoingChatDiv);
@@ -119,7 +110,6 @@ const handleOutgoingChat = () => {
 }
 
 deleteButton.addEventListener("click", () => {
-    // Remove the chats from local storage and call loadDataFromLocalstorage function
     if(confirm("Are you sure you want to delete all the chats?")) {
         localStorage.removeItem("all-chats");
         loadDataFromLocalstorage();
@@ -127,7 +117,6 @@ deleteButton.addEventListener("click", () => {
 });
 
 themeButton.addEventListener("click", () => {
-    // Toggle body's class for the theme mode and save the updated theme to the local storage
     document.body.classList.toggle("light-mode");
     localStorage.setItem("themeColor", themeButton.innerText);
     themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
@@ -136,14 +125,11 @@ themeButton.addEventListener("click", () => {
 const initialInputHeight = chatInput.scrollHeight;
 
 chatInput.addEventListener("input", () => {
-    // Adjust the height of the input field dynamically based on its content
     chatInput.style.height =  `${initialInputHeight}px`;
     chatInput.style.height = `${chatInput.scrollHeight}px`;
 });
 
 chatInput.addEventListener("keydown", (e) => {
-    // If the Enter key is pressed without Shift and the window width is larger
-    // than 800 pixels, handle the outgoing chat
     if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
         e.preventDefault();
         handleOutgoingChat();
