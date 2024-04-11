@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Travana App</title>
+    <link rel="stylesheet" href="/activities/style.css">
+</head>
+<body>
+    <h1>Travana App</h1>
+    <div class="add-chatgpt">
+        <p>
+           Ask from our AI  <a href="/chatgpt/index.html">TravanaAi</a>
+        </p>
+    </div>
+    <!-- Add your form, search input, and results container here -->
+    <form id="search-form">
+        <input type="text" id="search-input" placeholder="Enter search description...">
+        <button type="submit">Search</button>
+    </form>
+
+    <div id="results" class="results"></div>
+
+    <script>
+        // Define the function to create salon cards
+        const createSalonCards = (salonData) => {
+            if (typeof(salonData) === "string") {
+                salonData = JSON.parse(salonData);
+            }
+            const resultsDiv = document.getElementById("results");
+            // Clear existing search results
+            resultsDiv.innerHTML = "";
+            salonData.forEach(salon => {
+                const card = document.createElement('div');
+                card.classList.add('salon-card');
+                card.innerHTML = `
+                    <div class="salon-card-content">
+                        <h2>${salon.name}</h2>
+                        <p><strong>Address:</strong> ${salon.address}</p>
+                        <p><strong>Rating:</strong> <span class="rating">${salon.rating}</span></p>
+                        <p><strong>Total Ratings:</strong> ${salon.total_ratings}</p>
+                        <p><strong>Status:</strong> <span class="${salon.business_status === 'OPERATIONAL' ? 'status' : 'closed'}">${salon.business_status}</span></p>
+                        <p><strong>Opening Hours:</strong> ${salon.opening_hours ? 'Open' : 'Closed'}</p>
+                     </div>
+                    <div class="overlay">
+                        <div class="overlay-content">
+                            <!-- Overlay content goes here -->
+                        </div>
+                    </div>
+                `;
+                resultsDiv.appendChild(card);
+            });
+        };
+
+        const searchForm = document.getElementById("search-form");
+        const searchInput = document.getElementById("search-input");
+
+        searchForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const description = searchInput.value.trim();
+
+            if (description === "") {
+                alert("Please enter a search description.");
+                return;
+            }
+
+            // Get user's geolocation
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const userLocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    const data = {
+                        description,
+                        userLocation
+                    };
+
+                    fetch("http://127.0.0.1:8000/api/recommend/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error("Network response was not ok.");
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        console.log(data);
+                        var data = JSON.stringify(data);
+                        data = JSON.parse(data);
+                        createSalonCards(data);
+                    })
+                    .catch((error) => {
+                        console.error("Error in fetch:", error);
+                        alert("An error occurred while searching. Please try again later.");
+                    });
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        });
+    </script>
+</body>
+</html>
