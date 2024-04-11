@@ -1,0 +1,4 @@
+.env
+keys
+requirement.txt
+.pre-commit-config.yaml
