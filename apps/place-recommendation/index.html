@@ -75,11 +75,12 @@
                         description,
                         userLocation
                     };
+                    let headers = new Headers();
 
                     fetch("http://127.0.0.1:8000/api/recommend/", {
                         method: "POST",
                         headers: {
-                            "Content-Type": "application/json"
+                            "Content-Type": "application/json",
                         },
                         body: JSON.stringify(data),
                     })
