@@ -4,10 +4,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from apps.controller.travana_ai_controller import TravanaAiController
 
-class TravanaAi(APIView):  
+
+class TravanaAi(APIView):
     def post(self, request):
-        description = request.data.get('description', '')
-        location = request.data.get('userLocation', '')
+        description = request.data.get("description", "")
+        location = request.data.get("userLocation", "")
         controller_instance = TravanaAiController(description, location, is_place=True)
         controller_instance.call_third_party_methods()
         response_data = json.loads(controller_instance.response_data)

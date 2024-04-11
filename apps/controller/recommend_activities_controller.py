@@ -2,14 +2,15 @@ from typing import Any
 from apps.thirdparty.openai_api_call import OpenAi
 from apps.thirdparty.google_third_party_call import GooglePlaces
 
+
 class RecommendationController:
-    def __init__(self, description={} ,location = {}, is_place = False) -> None:
+    def __init__(self, description={}, location={}, is_place=False) -> None:
         self.description = description
         self.response_data = None
         self.third_party_instance = None
         self.is_place = is_place
         self.location = location
-     
+
     def call_third_party_methods(self):
         if self.is_place:
             self.third_part_instance = GooglePlaces(self.description, self.location)

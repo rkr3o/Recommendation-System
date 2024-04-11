@@ -3,6 +3,7 @@ from openai import OpenAI
 import gradio as gr
 from keys.third_party_api_keys import Constants
 
+
 class OpenAi:
     def __init__(self) -> None:
         self.key = Constants.ThirdParty.OpenAi.KEY
@@ -12,12 +13,13 @@ class OpenAi:
     def __call__(self):
         self.third_party_call()
         self.process_response()
-    
+
     def third_party_call(self):
         pass
-    
+
     def process_response(self):
         pass
+
 
 # openai.api_key = "xxxxxx"
 
@@ -40,7 +42,6 @@ class OpenAi:
 #     )
 
 #     return response.choices[0].text
-
 
 
 # def chatgpt_clone(input, history):

@@ -16,9 +16,9 @@
         <input type="text" id="search-input" placeholder="Enter search description...">
         <button type="submit">Search</button>
     </form>
-    
+
     <div id="results" class="results"></div>
-    
+
     <script>
         // Define the function to create salon cards
         const createSalonCards = (salonData) => {
@@ -55,14 +55,14 @@
 
         searchForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            
+
             const description = searchInput.value.trim();
-            
+
             if (description === "") {
                 alert("Please enter a search description.");
                 return;
             }
-            
+
             // Get user's geolocation
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition((position) => {
@@ -70,12 +70,12 @@
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
                     };
-                    
+
                     const data = {
                         description,
                         userLocation
                     };
-                    
+
                     fetch("http://127.0.0.1:8000/api/recommend/", {
                         method: "POST",
                         headers: {
