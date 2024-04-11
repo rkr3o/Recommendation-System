@@ -1,7 +1,7 @@
 import json
 import random
 import requests
-from apps.constant.constant import Recommendation
+from apps.constant.recommendation_constant import Recommendation
 
 import requests
 
